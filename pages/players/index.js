@@ -1,11 +1,14 @@
 
-import PlayerItem from '@/component/player-item';
-import React, { useEffect, useState } from 'react'
+
+import PlayerItem from "@/component/player-item";
+import { useEffect, useState } from "react"
 
 export default function Players() {
     const [players, setPlayers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const [playersName, setPlayersName] = useState('');
+    const [countryName, setCountryName] = useState('')
     useEffect(()=>{
         const getPlayers = async ()=>{
             try{
@@ -23,7 +26,11 @@ export default function Players() {
             }
         }
         getPlayers();
-    },[])
+    },[]);
+    const handleSubmit = ()=>{
+        e.preventDefault()
+        
+    }
 
     if(isLoading){
         return (
@@ -44,7 +51,13 @@ export default function Players() {
    
   return (
     <div>
-        <h2>Players List</h2>
+        <h2> Add a New Player</h2>
+        <form onSubmit={handleSubmit}>
+            <input type="text" placeholder="Enter a player Name" value={playersName} onChange={e=>setPlayersName(e.target.value)} />
+            <input type="text"  placeholder="Enter country Name" value ={countryName} onChange={e=>setCountryName(e.target.value)} />
+            <button type="submit">Add Player</button>
+        </form>
+        <h3 className="text-3xl text-center">Players List</h3>
         {
             players?.map(player =>(
                 <PlayerItem player ={player} key={player.id}/>
@@ -53,4 +66,5 @@ export default function Players() {
     </div>
   )
 }
+
 
